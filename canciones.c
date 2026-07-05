@@ -134,3 +134,97 @@ void registrarCancion(Cancion canciones[], int *cantidad) {
     printf("\nCantidad actual: %d\n", *cantidad);
 	printf("\nCancion registrada correctamente!\n");
 }
+
+void listarCanciones(Cancion canciones[], int cantidad) {
+    int i;
+    char duracion_str[20];
+    
+    if (cantidad == 0) {
+        printf("\nNo hay canciones registradas.\n");
+        return;
+    }
+    
+    printf("\n==============================\n");
+    printf("LISTADO DE CANCIONES\n");
+    printf("==============================\n");
+    printf("%-12s | %-30s | %-12s | %-20s | %-20s | %-8s\n",
+           "Codigo", "Titulo", "Clasificacion", "Compositor", "Artista", "Duracion");
+    printf("--------------------------------------------------------------------------------------------------------\n");
+    
+    for (i = 0; i < cantidad; i++) {
+        formatearDuracion(canciones[i].duracion, duracion_str);
+        
+        printf("%-12s | %-30s | %-12s | %-20s | %-20s | %-8s\n",
+               canciones[i].codigo,
+               canciones[i].titulo,
+               canciones[i].clasificacion,
+               canciones[i].compositor,
+               canciones[i].artista,
+               duracion_str);
+    }
+}
+
+void buscarCancion(Cancion canciones[], int cantidad) {
+    int opcion, i, encontrados;
+    char busqueda[100];
+    
+    if (cantidad == 0) {
+        printf("\nNo hay canciones registradas.\n");
+        return;
+    }
+    
+    printf("\n==============================\n");
+    printf("BUSCAR CANCION\n");
+    printf("==============================\n");
+    printf("1. Por Codigo\n");
+    printf("2. Por Titulo\n");
+    printf("3. Por Compositor\n");
+    printf("4. Por Artista\n");
+    printf("5. Por Clasificacion\n");
+    printf("Seleccione: ");
+    scanf("%d", &opcion);
+    
+    printf("Ingrese el valor a buscar: ");
+    scanf(" %[^\n]", busqueda);
+    
+    encontrados = 0;
+    printf("\nResultados de la busqueda:\n");
+    printf("--------------------------------------------------------------------------------------------------------\n");
+    
+    for (i = 0; i < cantidad; i++) {
+        int coincide = 0;
+
+        switch (opcion) {
+            case 1:
+                // Antes: strcmp(canciones[i].codigo, busqueda) == 0
+                if (str_igual_ignore_case(canciones[i].codigo, busqueda)) coincide = 1;
+                break;
+            case 2:
+                // Antes: strstr(canciones[i].titulo, busqueda) != NULL
+                if (str_buscar_ignore_case(canciones[i].titulo, busqueda) != NULL) coincide = 1;
+                break;
+            case 3:
+                // Antes: strstr(canciones[i].compositor, busqueda) != NULL
+                if (str_buscar_ignore_case(canciones[i].compositor, busqueda) != NULL) coincide = 1;
+                break;
+            case 4:
+                // Antes: strstr(canciones[i].artista, busqueda) != NULL
+                if (str_buscar_ignore_case(canciones[i].artista, busqueda) != NULL) coincide = 1;
+                break;
+            case 5:
+                // Antes: strcmp(canciones[i].clasificacion, busqueda) == 0
+                if (str_buscar_ignore_case(canciones[i].clasificacion, busqueda)) coincide = 1;
+                break;
+            default:
+                printf("Opcion no valida.\n");
+                return;
+        }
+        
+        if (coincide) {
+            mostrarCancion(canciones[i]);
+            encontrados++;
+        }
+    }
+    
+    printf("\nEncontrados: %d cancion(es).\n", encontrados);
+}
