@@ -81,6 +81,27 @@ int main() {
                         case 2:
                             tiempoTotal(canciones, cantidad);
                             break;
+                            case 3:
+                            cancionMasLarga(canciones, cantidad);
+                            break;
+                        case 4:
+                            cancionMasCorta(canciones, cantidad);
+                            break;
+                        case 5:
+                            cantidadPorClasificacion(canciones, cantidad);
+                            break;
+                        case 6:
+                            promedioDuracion(canciones, cantidad);
+                            break;
+                        case 7:
+                            clasificacionMayor(canciones, cantidad);
+                            break;
+                        case 8:
+                            tiempoPorClasificacion(canciones, cantidad);
+                            break;
+                        case 9:
+                            printf("\nVolviendo al menu principal...\n");
+                            break;
      
                         default:
                             printf("\nOpción no valida.\n");
