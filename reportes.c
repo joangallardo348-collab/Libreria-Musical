@@ -52,3 +52,37 @@ void tiempoTotal(Cancion canciones[], int cantidad) {
     formatearDuracion(total_segundos, duracion_str);
     printf("\nTiempo total de reproduccion: %s\n", duracion_str);
 }
+
+void cancionMasLarga(Cancion canciones[], int cantidad) {
+    if (cantidad == 0) {
+        printf("\nNo hay canciones registradas.\n");
+        return;
+    }
+    
+    int max_index = 0;
+    for (int i = 1; i < cantidad; i++) {
+        if (canciones[i].duracion > canciones[max_index].duracion) {
+            max_index = i;
+        }
+    }
+    
+    printf("\nCancion mas larga:\n");
+    mostrarCancion(canciones[max_index]);
+}
+
+void cancionMasCorta(Cancion canciones[], int cantidad) {
+    if (cantidad == 0) {
+        printf("\nNo hay canciones registradas.\n");
+        return;
+    }
+    
+    int min_index = 0;
+    for (int i = 1; i < cantidad; i++) {
+        if (canciones[i].duracion < canciones[min_index].duracion) {
+            min_index = i;
+        }
+    }
+    
+    printf("\nCancion mas corta:\n");
+    mostrarCancion(canciones[min_index]);
+}
