@@ -379,3 +379,32 @@ void mostrarCancion(Cancion cancion) {
            cancion.artista,
            duracion_str);
 }
+
+void formatearDuracion(int segundos, char *buffer) {
+    int minutos = segundos / 60;
+    int segs = segundos % 60;
+    sprintf(buffer, "%d:%02d", minutos, segs);
+}
+
+void convertirMinusculas(char origen[], char destino[]) {
+    int i = 0;
+
+    while (origen[i] != '\0') {
+        destino[i] = tolower((unsigned char)origen[i]);
+        i++;
+    }
+
+    destino[i] = '\0';
+}
+
+// Compara si dos cadenas son iguales ignorando mayúsculas/minúsculas
+int str_igual_ignore_case(const char *s1, const char *s2) {
+    while (*s1 && *s2) {
+        if (tolower((unsigned char)*s1) != tolower((unsigned char)*s2)) {
+            return 0; // No son iguales
+        }
+        s1++;
+        s2++;
+    }
+    return tolower((unsigned char)*s1) == tolower((unsigned char)*s2);
+}
