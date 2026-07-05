@@ -408,3 +408,21 @@ int str_igual_ignore_case(const char *s1, const char *s2) {
     }
     return tolower((unsigned char)*s1) == tolower((unsigned char)*s2);
 }
+
+// Busca una subcadena dentro de otra ignorando mayúsculas/minúsculas
+char *str_buscar_ignore_case(const char *pajar, const char *aguja) {
+    if (!*aguja) return (char *)pajar;
+    
+    for (; *pajar; pajar++) {
+        if (tolower((unsigned char)*pajar) == tolower((unsigned char)*aguja)) {
+            const char *h = pajar;
+            const char *n = aguja;
+            while (*h && *n && tolower((unsigned char)*h) == tolower((unsigned char)*n)) {
+                h++;
+                n++;
+            }
+            if (!*n) return (char *)pajar; // ¡Encontrado!
+        }
+    }
+    return NULL; // No se encontró
+}
