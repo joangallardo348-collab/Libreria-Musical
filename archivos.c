@@ -58,3 +58,30 @@ void cargarArchivo(Cancion canciones[], int *cantidad) {
     fclose(archivo);
     printf("\nSe cargaron %d canciones del archivo.\n", *cantidad);
 }
+void guardarArchivo(Cancion canciones[], int cantidad) {
+    FILE *archivo;
+    int i;
+    
+    archivo = fopen(ARCHIVO, "w");
+    if (archivo == NULL) {
+        printf("\nError al abrir el archivo para guardar.\n");
+        return;
+    }
+    
+    // Escribir cabecera
+    fprintf(archivo, "codigo_cancion;titulo;clasificacion;compositor;artista;duracion_segundos\n");
+    
+    // Escribir datos
+    for (i = 0; i < cantidad; i++) {
+        fprintf(archivo, "%s;%s;%s;%s;%s;%d\n",
+                canciones[i].codigo,
+                canciones[i].titulo,
+                canciones[i].clasificacion,
+                canciones[i].compositor,
+                canciones[i].artista,
+                canciones[i].duracion);
+    }
+    
+    fclose(archivo);
+    printf("\nSe guardaron %d canciones en el archivo.\n", cantidad);
+}
