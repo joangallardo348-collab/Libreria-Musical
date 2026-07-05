@@ -42,3 +42,95 @@ int validarCodigo(Cancion canciones[], int cantidad, const char *codigo)
     return 1;
 }
 
+void convertirMayusculas(char texto[])
+	{
+		int i;
+
+		for(i = 0; texto[i] != '\0'; i++)
+		{
+			texto[i] = toupper((unsigned char)texto[i]);
+		}
+	}
+
+int buscarPorCodigo(Cancion canciones[], int cantidad, const char *codigo) {
+    int i;
+    for (i = 0; i < cantidad; i++) {
+        if (strcmp(canciones[i].codigo, codigo) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void registrarCancion(Cancion canciones[], int *cantidad) {
+    int opcion, i, clasif_seleccionada;
+    char codigo[MAX_CODIGO];
+    Cancion nueva;
+    
+    if (*cantidad >= MAX_CANCIONES) {
+        printf("\nError: Limite de canciones alcanzado.\n");
+        return;
+    }
+    
+    printf("\n==============================\n");
+    printf("REGISTRAR CANCION\n");
+    printf("==============================\n");
+    
+    // Validar codigo
+	
+	do
+	{
+		printf("Codigo (1-15 caracteres, sin espacios): ");
+		scanf(" %99[^\n]", codigo);
+
+		if(!validarCodigo(canciones, *cantidad, codigo))
+		{
+			printf("\nError:\n");
+			printf("- El codigo ya existe o es invalido.\n");
+			printf("- Solo letras y numeros.\n");
+			printf("- Sin espacios.\n");
+			printf("- Maximo 15 caracteres.\n\n");
+		}
+
+	}while(!validarCodigo(canciones, *cantidad, codigo));	
+	    
+    strcpy(nueva.codigo, codigo);
+    
+    printf("Titulo: ");
+    scanf(" %[^\n]", nueva.titulo);
+    
+    printf("Compositor: ");
+    scanf(" %[^\n]", nueva.compositor);
+    
+    printf("Artista: ");
+    scanf(" %[^\n]", nueva.artista);
+    
+    // Seleccionar clasificacion
+    printf("\nClasificaciones:\n");
+    for (i = 0; i < MAX_CLASIFICACIONES; i++) {
+        printf("%d. %s\n", i + 1, clasificaciones[i]);
+    }
+    
+    do {
+        printf("Seleccione (1-%d): ", MAX_CLASIFICACIONES);
+        scanf("%d", &opcion);
+    } while (opcion < 1 || opcion > MAX_CLASIFICACIONES);
+    
+    strcpy(nueva.clasificacion, clasificaciones[opcion - 1]);
+    
+    // Validar la duracion
+    do {
+        printf("Duracion en segundos (mayor a 0): ");
+        scanf("%d", &nueva.duracion);
+        if (nueva.duracion <= 0) {
+            printf("Error: La duracion debe ser mayor a 0.\n");
+        }
+    } while (nueva.duracion <= 0);
+    
+    // Guardar la cancion
+    canciones[*cantidad] = nueva;
+    (*cantidad)++;
+    
+    printf("\nCantidad actual: %d\n", *cantidad);
+	printf("\nCancion registrada correctamente!\n");
+}
