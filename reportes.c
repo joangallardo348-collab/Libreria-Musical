@@ -86,3 +86,50 @@ void cancionMasCorta(Cancion canciones[], int cantidad) {
     printf("\nCancion mas corta:\n");
     mostrarCancion(canciones[min_index]);
 }
+
+void cantidadPorClasificacion(Cancion canciones[], int cantidad) {
+
+    if (cantidad == 0) {
+        printf("\nNo hay canciones registradas.\n");
+        return;
+    }
+
+    int conteos[MAX_CLASIFICACIONES] = {0};
+
+    for (int i = 0; i < cantidad; i++) {
+        for (int j = 0; j < MAX_CLASIFICACIONES; j++) {
+            if (strcmp(canciones[i].clasificacion, clasificaciones[j]) == 0) {
+                conteos[j]++;
+                break;
+            }
+        }
+    }
+
+    printf("\n==============================\n");
+    printf("CANCIONES POR CLASIFICACION\n");
+    printf("==============================\n");
+
+    for (int i = 0; i < MAX_CLASIFICACIONES; i++) {
+        if (conteos[i] > 0) {
+            printf("%-15s: %d cancion(es)\n", clasificaciones[i], conteos[i]);
+        }
+    }
+}
+
+void promedioDuracion(Cancion canciones[], int cantidad) {
+    if (cantidad == 0) {
+        printf("\nNo hay canciones registradas.\n");
+        return;
+    }
+    
+    int total_segundos = 0;
+    for (int i = 0; i < cantidad; i++) {
+        total_segundos += canciones[i].duracion;
+    }
+    
+    double promedio = (double)total_segundos / cantidad;
+    char duracion_str[20];
+    formatearDuracion((int)promedio, duracion_str);
+    
+    printf("\nDuracion promedio: %.2f segundos (%s)\n", promedio, duracion_str);
+}
